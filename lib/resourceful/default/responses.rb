@@ -69,7 +69,11 @@ module Resourceful
               set_default_flash :notice, I18n.t('make_resourceful.create.success', :default => "Create successful!")
               set_default_redirect object_path
             end
-            format.js
+            format.js do
+              render :update do |page|
+                page.reload
+              end
+            end
           end
           
           response_for(:create_fails) do |format|
@@ -77,7 +81,11 @@ module Resourceful
               set_default_flash :error, I18n.t('make_resourceful.create.fails', :default => "There was a problem!")
               render :action => :new, :status => 422
             end
-            format.js
+            format.js do
+              render :update do |page|
+                page.replace dom_id(current_object), :partial => 'form'
+              end
+            end
           end
         
           response_for(:update) do |format|
@@ -85,7 +93,11 @@ module Resourceful
               set_default_flash :notice, I18n.t('make_resourceful.update.success', :default => "Save successful!")
               set_default_redirect object_path
             end
-            format.js
+            format.js do
+              render :update do |page|
+                page.reload
+              end
+            end
           end
           
           response_for(:update_fails) do |format|
@@ -93,7 +105,11 @@ module Resourceful
               set_default_flash :error, I18n.t('make_resourceful.update.fails', :default => "There was a problem saving!")
               render :action => :edit, :status => 422
             end
-            format.js
+            format.js do
+              render :update do |page|
+                page.replace dom_id(current_object), :partial => 'form'
+              end
+            end
           end
           
           response_for(:destroy) do |format|
@@ -101,7 +117,11 @@ module Resourceful
               set_default_flash :notice, I18n.t('make_resourceful.destroy.success', :default => "Record deleted!")
               set_default_redirect objects_path
             end
-            format.js
+            format.js do
+              render :update do |page|
+                page[current_object].remove()
+              end
+            end
           end
           
           response_for(:destroy_fails) do |format|
