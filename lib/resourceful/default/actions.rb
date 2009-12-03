@@ -26,7 +26,7 @@ module Resourceful
         #load_object
         before :show
         response_for :show
-      rescue
+      rescue ActiveRecord::RecordNotFound
         response_for :show_fails
       end
 
@@ -59,7 +59,7 @@ module Resourceful
           current_object.reload
           result = false
         end
-        
+
         if result
           save_succeeded!
           after :update
