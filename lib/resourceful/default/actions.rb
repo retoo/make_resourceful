@@ -33,19 +33,19 @@ module Resourceful
       # POST /foos
       def create
         current_model.transaction do
-        build_object
-        load_object
-        before :create
-        if current_object.save
-          save_succeeded!
-          after :create
-          response_for :create
-        else
-          save_failed!
-          after :create_fails
-          response_for :create_fails
+          build_object
+          load_object
+          before :create
+          if current_object.save
+            save_succeeded!
+            after :create
+            response_for :create
+          else
+            save_failed!
+            after :create_fails
+            response_for :create_fails
+          end
         end
-      end
       end
 
       # PUT /foos/12
@@ -54,23 +54,23 @@ module Resourceful
 
         #load_object
         before :update
-        begin
-          result = current_object.update_attributes object_parameters
-        rescue ActiveRecord::StaleObjectError
-          current_object.reload
-          result = false
+          begin
+            result = current_object.update_attributes object_parameters
+          rescue ActiveRecord::StaleObjectError
+            current_object.reload
+            result = false
+          end
+
+          if result
+            save_succeeded!
+            after :update
+            response_for :update
+          else
+            save_failed!
+            after :update_fails
+            response_for :update_fails
+          end
         end
-        
-        if result
-          save_succeeded!
-          after :update
-          response_for :update
-        else
-          save_failed!
-          after :update_fails
-          response_for :update_fails
-        end
-      end
       end
 
       # GET /foos/new

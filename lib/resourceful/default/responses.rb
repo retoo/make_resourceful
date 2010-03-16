@@ -70,8 +70,8 @@ module Resourceful
               if params[:create_another]
                 redirect_to new_object_path
               else
-              set_default_redirect object_path
-            end
+                set_default_redirect object_path
+              end
 
             end
             format.js do
@@ -80,7 +80,7 @@ module Resourceful
               end
             end
           end
-          
+
           response_for(:create_fails) do |format|
             format.html do
               set_default_flash :error, I18n.t('make_resourceful.create.fails', :default => "There was a problem!")
@@ -92,7 +92,7 @@ module Resourceful
               end
             end
           end
-        
+
           response_for(:update) do |format|
             format.html do
               set_default_flash :notice, I18n.t('make_resourceful.update.success', :default => "Save successful!")
@@ -104,7 +104,7 @@ module Resourceful
               end
             end
           end
-          
+
           response_for(:update_fails) do |format|
             format.html do
               set_default_flash :error, I18n.t('make_resourceful.update.fails', :default => "There was a problem saving!")
@@ -116,7 +116,7 @@ module Resourceful
               end
             end
           end
-          
+
           response_for(:destroy) do |format|
             format.html do
               set_default_flash :notice, I18n.t('make_resourceful.destroy.success', :default => "Record deleted!")
@@ -128,7 +128,7 @@ module Resourceful
               end
             end
           end
-          
+
           response_for(:destroy_fails) do |format|
             format.html do
               set_default_flash :error, I18n.t('make_resourceful.destroy.fails', :default => "There was a problem deleting!")

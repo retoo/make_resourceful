@@ -120,7 +120,7 @@ module Resourceful
       #
       #   build_object
       #   current_object.person.id #=> 4
-      # 
+      #
       def build_object
         return @build_object if @build_object
         @current_object = @build_object = if current_model.respond_to? :build
