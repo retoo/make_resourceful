@@ -59,7 +59,6 @@ module Resourceful
             current_object.reload
             result = false
           end
-          
           if result
             save_succeeded!
             after :update
