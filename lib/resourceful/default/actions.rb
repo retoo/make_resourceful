@@ -26,12 +26,13 @@ module Resourceful
         #load_object
         before :show
         response_for :show
-      rescue
+      rescue ActiveRecord::RecordNotFound
         response_for :show_fails
       end
 
       # POST /foos
       def create
+        current_model.transaction do
         build_object
         load_object
         before :create
@@ -45,12 +46,14 @@ module Resourceful
           response_for :create_fails
         end
       end
+      end
 
       # PUT /foos/12
       def update
+        current_model.transaction do
+
         #load_object
         before :update
-        
         begin
           result = current_object.update_attributes object_parameters
         rescue ActiveRecord::StaleObjectError
@@ -67,6 +70,7 @@ module Resourceful
           after :update_fails
           response_for :update_fails
         end
+      end
       end
 
       # GET /foos/new
